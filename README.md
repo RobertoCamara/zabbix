@@ -1,2 +1,3 @@
 # zabbix
-stack deploy zabbix
+
+Deploy com docker compose
