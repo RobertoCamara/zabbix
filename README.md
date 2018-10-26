@@ -2,11 +2,11 @@
 
 Deploy com docker compose
 
-### Clone repositório
+### Clone repository
 git clone git@github.com:RobertoCamara/zabbix.git
 
-### Criar containers
+### Create and start containers
 docker-compose up -d
 
-### Excluir containers
+### Stop and remove containers, networks, images, and volumes
 docker-compose down
