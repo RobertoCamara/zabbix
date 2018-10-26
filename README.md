@@ -1,0 +1,2 @@
+# zabbix
+stack deploy zabbix
