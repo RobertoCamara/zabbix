@@ -67,5 +67,4 @@ services:
             - ./protocolo/snmptraps:/var/lib/zabbix/snmptraps:rw
             - ./protocolo/mibs:/usr/share/snmp/mibs:ro
         ports:
-            - '162:162/udp'
-        
+            - '162:162/udp'      
