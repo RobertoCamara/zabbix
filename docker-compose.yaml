@@ -14,7 +14,7 @@ services:
         image: mysql:5.7
         container_name: mysql-server
         volumes:
-            - './data/mysql:/var/lib/mysql'
+            - ./data/mysql:/var/lib/mysql
         ports:
             - '3306:3306'
         environment:
@@ -64,8 +64,8 @@ services:
         image: zabbix/zabbix-snmptraps
         container_name: zabbix-snmptraps
         volumes:
-            - './data/zabbix/snmptraps:/var/lib/zabbix/snmptraps:rw'
-            - './data/zabbix/mibs:/usr/share/snmp/mibs:ro'
+            - ./protocolo/snmptraps:/var/lib/zabbix/snmptraps:rw
+            - ./protocolo/mibs:/usr/share/snmp/mibs:ro
         ports:
             - '162:162/udp'
         
