@@ -56,7 +56,7 @@ services:
             - MYSQL_ROOT_PASSWORD=root_pwd
         links:
             - 'mysql-server:mysql'
-            - 'zabbix-server-mysql:zabbix-server'
+            - 'zabbix-server:zabbix-server'
         ports:
             - '8090:80'
             
