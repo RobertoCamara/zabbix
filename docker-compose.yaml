@@ -27,9 +27,9 @@ services:
         image: zabbix/zabbix-java-gateway
         container_name: zabbix-java-gateway
         
-    zabbix-server-mysql:
+    zabbix-server:
         image: zabbix/zabbix-server-mysql
-        container_name: zabbix-server-mysql
+        container_name: zabbix-server
         environment:
             - DB_SERVER_HOST=mysql-server
             - MYSQL_DATABASE=zabbix
