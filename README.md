@@ -1,7 +1,5 @@
 # zabbix
 
-Deploy com docker compose
-
 ### Clone repository
 git clone git@github.com:RobertoCamara/zabbix.git
 
