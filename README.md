@@ -9,7 +9,7 @@ cd zabbix
 mkdir -p data/mysql protocolo/snmptraps protocolo/mibs
 
 ## Docker stack
-docker stack deploy -c docker-compose.yaml NAME_STACK
+docker stack deploy -c stack.yaml NAME_STACK
 
 ## Docker compose
 
