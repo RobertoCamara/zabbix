@@ -5,6 +5,7 @@ git clone git@github.com:RobertoCamara/zabbix.git
 
 ### Create directories
 cd zabbix
+
 mkdir -p data/mysql protocolo/snmptraps protocolo/mibs
 
 ## Docker stack
