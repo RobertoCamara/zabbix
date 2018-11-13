@@ -1,7 +1,7 @@
 # zabbix
 
 ### Clone repository
-git clone git@github.com:RobertoCamara/zabbix.git
+git clone https://github.com/RobertoCamara/zabbix.git
 
 ### Create directories
 cd zabbix
