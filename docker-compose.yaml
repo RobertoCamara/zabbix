@@ -58,7 +58,7 @@ services:
             - 'mysql-server:mysql'
             - 'zabbix-server:zabbix-server'
         ports:
-            - '8090:80'
+            - '8080:80'
             
     zabbix-snmptraps:
         image: zabbix/zabbix-snmptraps
