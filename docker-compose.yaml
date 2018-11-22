@@ -1,20 +1,44 @@
 version: "3.4"
 
 services:
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+
     portainer:
         image: portainer/portainer
-        container_name: portainer
-        ports:
-          - "9000:9000"
         command: -H unix:///var/run/docker.sock
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+          - VIRTUAL_HOST=portainer.SEUDOMINIO.com.br
+
+    zabbix-app:
+        image: zabbix/zabbix-web-nginx-mysql
+        environment:
+          - TZ=America/Sao_Paulo
+          - PHP_TZ=America/Sao_Paulo
+          - DB_SERVER_HOST=mysql-server
+          - MYSQL_DATABASE=zabbix
+          - MYSQL_USER=zabbix
+          - MYSQL_PASSWORD=zabbix_pwd
+          - MYSQL_ROOT_PASSWORD=root_pwd
+          - VIRTUAL_HOST=zabbix.SEUDOMINIO.com.br
+        links:
+          - 'mysql-server:mysql'
+          - 'zabbix-server:zabbix-server'
+        deploy:
+          mode: replicated
+          replicas: 3
 
     mysql-server:
         image: mysql:5.7
-        container_name: mysql-server
         volumes:
-            - ./data/mysql:/var/lib/mysql
+            - /var/zabbix/data/mysql:/var/lib/mysql
         ports:
             - '3306:3306'
         environment:
@@ -25,11 +49,12 @@ services:
             
     zabbix-java-gateway:
         image: zabbix/zabbix-java-gateway
-        container_name: zabbix-java-gateway
-        
+        deploy:
+            mode: replicated
+            replicas: 1
+    
     zabbix-server:
         image: zabbix/zabbix-server-mysql
-        container_name: zabbix-server
         environment:
             - DB_SERVER_HOST=mysql-server
             - MYSQL_DATABASE=zabbix
@@ -42,29 +67,20 @@ services:
             - 'zabbix-java-gateway:zabbix-java-gateway'
         ports:
             - '10051:10051'
-            
-    zabbix-app:
-        image: zabbix/zabbix-web-nginx-mysql
-        container_name: zabbix-app
-        environment:
-            - TZ=America/Sao_Paulo
-            - PHP_TZ=America/Sao_Paulo
-            - DB_SERVER_HOST=mysql-server
-            - MYSQL_DATABASE=zabbix
-            - MYSQL_USER=zabbix
-            - MYSQL_PASSWORD=zabbix_pwd
-            - MYSQL_ROOT_PASSWORD=root_pwd
-        links:
-            - 'mysql-server:mysql'
-            - 'zabbix-server:zabbix-server'
-        ports:
-            - '8080:80'
-            
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+        
     zabbix-snmptraps:
         image: zabbix/zabbix-snmptraps
-        container_name: zabbix-snmptraps
         volumes:
-            - ./protocolo/snmptraps:/var/lib/zabbix/snmptraps:rw
-            - ./protocolo/mibs:/usr/share/snmp/mibs:ro
+            - /var/zabbix/protocolo/snmptraps:/var/lib/zabbix/snmptraps:rw
+            - /var/zabbix/protocolo/mibs:/usr/share/snmp/mibs:ro
         ports:
-            - '162:162/udp'      
+            - '162:162/udp'    
+        deploy:
+            mode: replicated
+            replicas: 1
+          
