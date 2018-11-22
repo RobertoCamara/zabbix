@@ -4,9 +4,7 @@
 git clone https://github.com/RobertoCamara/zabbix.git
 
 ### Create directories
-cd zabbix
-
-mkdir -p data/mysql protocolo/snmptraps protocolo/mibs
+mkdir -p var/zabbix/data var/zabbix/protocolo/snmptraps var/zabbix/protocolo/mibs
 
 ## Docker stack
 docker stack deploy -c stack.yaml NAME_STACK
